@@ -3,8 +3,7 @@ package com.sumutella.recipeapp.controllers;
 
 import com.sumutella.recipeapp.models.Category;
 import com.sumutella.recipeapp.models.UnitOfMeasure;
-import com.sumutella.recipeapp.repositories.CategoryRepository;
-import com.sumutella.recipeapp.repositories.UnitOfMeasureRepository;
+import com.sumutella.recipeapp.services.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,21 +18,18 @@ import java.util.Optional;
 @Controller
 public class IndexController {
 
-    private CategoryRepository categoryRepository;
-    private UnitOfMeasureRepository unitOfMeasureRepository;
+    private final RecipeService recipeService;
 
-    public IndexController(CategoryRepository categoryRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
-        this.categoryRepository = categoryRepository;
-        this.unitOfMeasureRepository = unitOfMeasureRepository;
+    public IndexController(RecipeService recipeService) {
+        this.recipeService = recipeService;
     }
+
 
     @RequestMapping({"/", "", "/index", "/index.html"})
     public String showIndexPage(Model model){
-        Optional<Category> optionalCategory = categoryRepository.findByDescription("American");
-        Optional<UnitOfMeasure> optionalUnitOfMeasure = unitOfMeasureRepository.findByDescription("Cup");
 
-        System.out.println("Category id is :" + optionalCategory.get().getId());
-        System.out.println("Unit of Measure id is :" + optionalUnitOfMeasure.get().getId());
+
+       model.addAttribute("recipes", recipeService.getRecipes());
 
 
         return "index";

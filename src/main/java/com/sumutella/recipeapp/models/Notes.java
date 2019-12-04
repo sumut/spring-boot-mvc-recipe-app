@@ -15,7 +15,9 @@ public class Notes {
     private Integer id;
     @OneToOne
     private Recipe recipe;
+    @Lob
     private String recipeNotes;
+
 
     public Notes() {
     }
