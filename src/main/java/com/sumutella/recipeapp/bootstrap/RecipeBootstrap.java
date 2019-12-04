@@ -4,10 +4,12 @@ import com.sumutella.recipeapp.models.*;
 import com.sumutella.recipeapp.repositories.CategoryRepository;
 import com.sumutella.recipeapp.repositories.RecipeRepository;
 import com.sumutella.recipeapp.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.Optional;
  * @time 12:21 AM
  * @since 12/4/2019, Wed
  */
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -32,8 +35,11 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        log.debug("loading bootstrap data");
         recipeRepository.saveAll(getRecipes());
+
     }
 
     private List<Recipe> getRecipes() {
