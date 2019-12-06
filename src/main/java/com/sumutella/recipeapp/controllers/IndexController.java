@@ -1,15 +1,13 @@
 package com.sumutella.recipeapp.controllers;
 
 
-import com.sumutella.recipeapp.models.Category;
-import com.sumutella.recipeapp.models.UnitOfMeasure;
+
 import com.sumutella.recipeapp.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Optional;
 
 /**
  * @author sumutella
@@ -31,8 +29,6 @@ public class IndexController {
     public String showIndexPage(Model model){
         log.debug("getting index page");
         model.addAttribute("recipes", recipeService.getRecipes());
-
-
         return "index";
     }
 
